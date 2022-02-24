@@ -31,7 +31,7 @@ class GameObject {
   async doBehaviorEvent(map) {
 
     // stop function if cutscene is playing or config is empty
-    if (map.isCutscenePlaying || this.behaviorLoop.length === 0) {
+    if (map.isCutscenePlaying || this.behaviorLoop.length === 0 || this.isStanding) {
       return;
     }
 

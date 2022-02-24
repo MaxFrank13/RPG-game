@@ -58,6 +58,18 @@ class OverworldMap {
     }
 
     this.isCutscenePlaying = false;
+
+    // reset NPCs to idle behavior
+    Object.values(this.gameObjects).forEach(object => object.doBehaviorEvent(this));
+  }
+
+  checkForActionCutscene() {
+    const hero = this.gameObjects["hero"];
+    const nextCoords = utils.nextPosition(hero.x, hero.y, hero.direction);
+    const match = Object.values(this.gameObjects).find(object => {
+      return `${object.x},${object.y}` === `${nextCoords.x},${nextCoords.y}`
+    })
+    console.log({ match })
   }
 
   addWall(x,y) {
@@ -92,9 +104,9 @@ window.OverworldMaps = {
         src: "images/characters/people/npc1.png",
         behaviorLoop: [
             { type: "stand", direction: "left", time: 800 },
-            { type: "stand", direction: "up", time: 800 },
+            { type: "stand", direction: "up", time: 1800 },
             { type: "stand", direction: "right", time: 1200 },
-            { type: "stand", direction: "up", time: 300 },
+            { type: "stand", direction: "up", time: 2300 },
         ]
       }),
       npc2: new Person({
@@ -103,11 +115,12 @@ window.OverworldMaps = {
         y: utils.withGrid(7),
         src: "images/characters/people/npc2.png",
         behaviorLoop: [
-            { type: "walk", direction: "left" },
-            { type: "stand", direction: "left", time: 600 },
-            { type: "walk", direction: "up" },
-            { type: "walk", direction: "right" },
-            { type: "walk", direction: "down" },
+          { type: "stand", direction: "left", time: 800 },
+          { type: "stand", direction: "up", time: 600 },
+          { type: "stand", direction: "left", time: 1500 },
+          { type: "stand", direction: "right", time: 1500 },
+          { type: "stand", direction: "down", time: 1300 },
+
         ]
       })
     },
